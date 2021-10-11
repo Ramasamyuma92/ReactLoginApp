@@ -8,25 +8,52 @@ function UploadDoument(props){
 
     const [date, setDate] = useState(new Date());
 
+    let formObject = {};
+    const handleSubmit = (event) => {
+        formObject = {};
+    const formData = new FormData(event.currentTarget);
+    console.log(event.currentTarget.value);
+    event.preventDefault();
+
+    let i =0;
+    for (let [key, value] of formData.entries()) {
+        
+      console.log(key, value);
+      
+    }
+    const value = Object.fromEntries(formData.entries());
+
+    console.log("Form object Stringy : " + JSON.stringify(value));
+
+    /*axios.post('/url', JSON.stringify(value))
+      .then(function (response) {
+        console.log(response);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+      */
+  };
+
     return (
         <div>
-        <div id="mySidenav" class="sidenav">
+        <div id="mySidenav" className="sidenav">
             <a href="#">ViewDocuments</a>
             <a href="#">UploadDocuments</a>
         </div>
         
         <div id="main" className=" main card col-12 col-lg-4 login-card mt-2 hv-center" >
         <div>
-            <img src={document} alt="Logo" class="documentImage" />
+            <img src={document} alt="Logo" className="documentImage" />
         </div>
         <div>
-            <form class="documentForm"> 
+            <form className="documentForm" onSubmit={handleSubmit}> 
                 <p className="text-left">Document Number </p>
                 <div className="form-group text-left">                
                 <input type="text" 
                        required
                        className="form-control text-left" 
-                       id="documentNumber" 
+                       name="documentNumber" 
                        aria-describedby="emailHelp" 
                        placeholder="Enter document number"
                 />
@@ -36,7 +63,7 @@ function UploadDoument(props){
                     <input type="text" 
                         required
                         className="form-control text-left" 
-                        id="supplierNumber" 
+                        name="supplierNumber" 
                         placeholder="Enter supplier number"
                     />
                 </div>
@@ -45,7 +72,7 @@ function UploadDoument(props){
                 <input type="text" 
                         required
                        className="form-control" 
-                       id="documentCurrency" 
+                       name="documentCurrency" 
                        aria-describedby="emailHelp" 
                        placeholder="Enter document currency"
                 />
@@ -55,12 +82,12 @@ function UploadDoument(props){
                     <input type="text" 
                         required
                         className="form-control" 
-                        id="documentAmount" 
+                        name="documentAmount" 
                         placeholder="Enter document amount"
                     />
                 </div>
                 <p className="text-left">Document Date </p>
-                <DatePicker selected={date} onChange={date => setDate(date)} />
+                <DatePicker name="documentDate" selected={date} onChange={date => setDate(date)} />
                 <p />
                 <button type="submit" className="btn btn-primary" style={{ width:"150px", backgroundColor:"lightgreen"}}>
                     Submit 
